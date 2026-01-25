@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class UNiagaraSystem;
 
 UCLASS(config=Game)
 class AGAM_415_FinalProjectile : public AActor
@@ -22,9 +23,37 @@ class AGAM_415_FinalProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
+	// Reference to Static Mesh, called ballMesh
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent* ballMesh;
+
+	// Material for baseMat
+	UPROPERTY(EditAnywhere)
+		UMaterial* baseMat;
+
+	// Setting up Color
+	UPROPERTY()
+		FLinearColor randColor;
+
+	// Setting Projectile Material
+	UPROPERTY(EditAnywhere)
+		UMaterialInterface* projMat;
+
+	// Setting dmi Mat
+	UPROPERTY()
+		UMaterialInstanceDynamic* dmiMat;
+
+	// Setting the Property for the Niagara System
+	UPROPERTY(EditANywhere)
+		UNiagaraSystem* colorP;
+
 public:
 	AGAM_415_FinalProjectile();
 
+protected:
+	virtual void BeginPlay();
+
+public:
 	/** called when projectile hits something */
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
